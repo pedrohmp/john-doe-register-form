@@ -3,37 +3,37 @@ import { useState } from "react";
 type HandleChangeInput = React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
 
 type Customer = {
-	cpf: string;
-	name: string;
-	email: string;
-	favoriteColor: string;
-	comments?: string;
+  cpf: string;
+  name: string;
+  email: string;
+  favoriteColor: string;
+  comments?: string;
 }
 
 export const colors = ["Vermelho", "Laranja", "Amarelo", "Verde", "Azul", "Anil", "Violeta"];
 
 const initialCustomer = {
   cpf: '',
-  name:'',
-  email:'',
+  name: '',
+  email: '',
   favoriteColor: colors[0],
-  comments:''
+  comments: ''
 }
 
 export const useForm = () => {
-	const [values, setValues] = useState<Customer>(initialCustomer);
+  const [values, setValues] = useState<Customer>(initialCustomer);
   const [error, setError] = useState<string>('');
   const [successResponse, setSuccessResponse] = useState<string>('');
 
   const handleChange = (event: HandleChangeInput) => {
-    setValues({...values, [event.target.name] : event.target.value});
+    setValues({ ...values, [event.target.name]: event.target.value });
   }
 
-  const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-		setSuccessResponse('')
+    setSuccessResponse('')
 
-    if(!values.name || !values.cpf || !values.email || !values.favoriteColor) {
+    if (!values.name || !values.cpf || !values.email || !values.favoriteColor) {
       setError('Preencha os campos obrigatórios *')
       return
     }
@@ -48,15 +48,15 @@ export const useForm = () => {
       })
 
       const data = await response.json();
-			setSuccessResponse(data.data.customer.name)
-    } catch(err) {
-			setError('Ocorreu um erro interno')
+      setSuccessResponse(data.data.customer.name)
+    } catch (err) {
+      setError('Ocorreu um erro interno')
     } finally {
-			setError('')
+      setError('')
       setValues(initialCustomer)
-    }   
+    }
   }
 
-	return { values, error, successResponse, handleChange, handleSubmit}
-	
+  return { values, error, successResponse, handleChange, handleSubmit }
+
 }

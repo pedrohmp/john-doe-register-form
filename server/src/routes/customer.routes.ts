@@ -1,7 +1,7 @@
 import express from 'express';
 import {
   createCustomer,
-	listCustomers
+  listCustomers
 } from '../controllers/customer.controller';
 import { validate } from '../middleware/validate';
 import { createCustomerSchema } from '../schemas/customer.schema';
@@ -15,6 +15,5 @@ router
     createCustomer
   )
   .get(listCustomers);
-
 
 export default router;
